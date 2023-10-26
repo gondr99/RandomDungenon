@@ -7,10 +7,8 @@ public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField] private Tilemap _floorTilemap, _wallTilemap;
 
-    [SerializeField] private TileBase _floorTile, _wallTopTile;
+    [SerializeField] private TileBase _floorTile, _wallTopTile, _wallSideRight, _wallSideLeft, _wallBottom, _wallFull;
     
-
-
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         PaintTiles(floorPositions, _floorTilemap, _floorTile);
@@ -31,15 +29,42 @@ public class TilemapVisualizer : MonoBehaviour
     }
 
 
+
+    public void PaintSingleBasicWall(Vector2Int position, byte tileFlag)
+    {
+        Debug.Log($"{position}, type: { tileFlag.ToString()}");
+        //벽하나 칠하기.
+        TileBase tile = null;
+
+        if (WallTypesHelper.wallTop.Contains(tileFlag))
+        {
+            tile = _wallTopTile;
+        }else if (WallTypesHelper.wallSideRight.Contains(tileFlag))
+        {
+            tile = _wallSideRight;
+        }else if (WallTypesHelper.wallSideLeft.Contains(tileFlag))
+        {
+            tile = _wallSideLeft;
+        }else if (WallTypesHelper.wallBottm.Contains(tileFlag))
+        {
+            tile = _wallBottom;
+        }else if (WallTypesHelper.wallBottm.Contains(tileFlag))
+        {
+            tile = _wallFull;
+        }
+        
+        if(tile != null)
+            PaintSingleTile(position, _wallTilemap, tile);
+    }
+
+    public void PaintSingleCornerWall(Vector2Int position, byte tileFlag)
+    {
+        Debug.Log($"{position}, type: {tileFlag.ToString()}");
+    }
+    
     public void Clear()
     {
         _floorTilemap.ClearAllTiles();
         _wallTilemap.ClearAllTiles();
-    }
-
-    public void PaintSingleBasicWall(Vector2Int position)
-    {
-        //벽하나 칠하기.
-        PaintSingleTile(position, _wallTilemap, _wallTopTile);
     }
 }
