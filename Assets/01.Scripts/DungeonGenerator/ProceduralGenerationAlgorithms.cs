@@ -76,10 +76,10 @@ public static class ProceduralGenerationAlgorithms
                 //절반의 확률로 가로부터 할지 세로부터 할지 결정한다. 
                 if (Random.value < 0.5f) 
                 {
-                    if (room.size.y >= minHeight * 2)
+                    if (room.size.y > minHeight * 2)
                     {
                         SplitHorizontal(minHeight, roomsQueue, room);
-                    }else if (room.size.x >= minWidth * 2)
+                    }else if (room.size.x > minWidth * 2)
                     {
                         SplitVertically(minWidth, roomsQueue, room);
                     }
@@ -90,10 +90,10 @@ public static class ProceduralGenerationAlgorithms
                 }
                 else
                 {
-                    if (room.size.x >= minWidth * 2)
+                    if (room.size.x > minWidth * 2)
                     {
                         SplitVertically(minWidth, roomsQueue, room);
-                    }else if (room.size.y >= minHeight * 2)
+                    }else if (room.size.y > minHeight * 2)
                     {
                         SplitHorizontal(minHeight, roomsQueue, room);
                     }else
@@ -111,8 +111,9 @@ public static class ProceduralGenerationAlgorithms
     
     private static void SplitVertically(int minWidth, Queue<BoundsInt> roomsQueue, BoundsInt room)
     {
-        int xSplit = Random.Range(minWidth, room.size.x - minWidth); 
-        //1부터 크기 -1까지 랜덤하게 나눠서 넣는다. 
+        //int xSplit = Random.Range(minWidth, room.size.x - minWidth); 
+        //1부터 크기 -1까지 랜덤하게 나눠서 넣는다.
+        int xSplit = Random.Range(1, room.size.x);
 
         //바운딩 박스의 생성자에서 포지션은 좌측하단을 말한다. 
         BoundsInt room1 = new BoundsInt(room.min, new Vector3Int(xSplit, room.size.y));
@@ -126,13 +127,13 @@ public static class ProceduralGenerationAlgorithms
 
     private static void SplitHorizontal(int minHeight, Queue<BoundsInt> roomsQueue, BoundsInt room)
     {
-        int ySplit = Random.Range(minHeight, room.size.y - minHeight); 
-        //1부터 크기 -1까지 랜덤하게 나눠서 넣는다. 
-
+        //int ySplit = Random.Range(minHeight, room.size.y - minHeight);
+        //이걸 만약 1 ~ room.size.y -1 까지 하면 좀더 랜덤하게 빠게지는 던전을 볼 수 있다. 
+        int ySplit = Random.Range(1, room.size.y);
         //바운딩 박스의 생성자에서 포지션은 좌측하단을 말한다. 
-        BoundsInt room1 = new BoundsInt(new Vector3Int(room.min.x, room.min.y + ySplit),
+        BoundsInt room1 = new BoundsInt(room.min,
                                     new Vector3Int(room.size.x, ySplit));
-        BoundsInt room2 = new BoundsInt(room.min, 
+        BoundsInt room2 = new BoundsInt(new Vector3Int(room.min.x, room.min.y + ySplit), 
                                     new Vector3Int(room.size.x, room.size.y - ySplit) );
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
