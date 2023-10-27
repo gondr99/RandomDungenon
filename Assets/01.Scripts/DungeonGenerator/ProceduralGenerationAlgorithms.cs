@@ -138,6 +138,85 @@ public static class ProceduralGenerationAlgorithms
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
     }
+    
+    
+    public static HashSet<Vector2Int> FillRoomTile(HashSet<Vector2Int> roomTiles, bool smoothLine = false)
+    {
+        List<Vector2Int> list = roomTiles.OrderBy(x => x.y).ToList();
+
+        HashSet<Vector2Int> filledPosition = new HashSet<Vector2Int>(); //추가할 포지션
+        
+        int currentY = list[0].y;
+        int minX = 0, maxX = 0;
+        int beforeMinX = 0, beforeMaxX = 0;
+        bool resetFlag = true;
+        bool firstLine = true;
+        
+        foreach (Vector2Int position in list)
+        {
+            if (resetFlag) //리셋이 된거라면
+            {
+                minX = position.x;
+                maxX = position.x;
+                resetFlag = false;
+            }
+
+            if (position.y != currentY)  //줄이 바뀐 순간
+            {
+                if (smoothLine)
+                {
+                    
+                    if (firstLine)
+                    {
+                        firstLine = false;
+                    }
+                    else
+                    {
+                        //첫줄이 아니면 보정작업
+                        minX = Mathf.Clamp(minX, beforeMinX - 1, beforeMinX + 1);
+                        maxX = Mathf.Clamp(maxX, beforeMaxX - 1, beforeMaxX + 1);
+                    }
+                    beforeMinX = minX; //이전값 보전
+                    beforeMaxX = maxX;
+                }
+                
+                FillLine(filledPosition, minX, maxX, currentY);
+                currentY = position.y;
+                resetFlag = true;
+            }
+            else
+            {
+                if (minX > position.x)
+                {
+                    minX = position.x;
+                }
+
+                if (maxX < position.x)
+                {
+                    maxX = position.x;
+                }
+            }
+        }
+        if (smoothLine)
+        {
+            minX = Mathf.Clamp(minX, beforeMinX - 1, beforeMinX + 1);
+            maxX = Mathf.Clamp(maxX, beforeMaxX - 1, beforeMaxX + 1);
+        }
+        //마지막에 한번 실행.
+        FillLine(filledPosition, minX, maxX, currentY);
+        
+        roomTiles.UnionWith(filledPosition);
+        return roomTiles;
+    }
+    
+    private static void FillLine(HashSet<Vector2Int> positions, int start, int end, int lineY)
+    {
+        Debug.Log(start);
+        for (int i = start; i <= end; ++i)
+        {
+            positions.Add(new Vector2Int(i, lineY));
+        }
+    }
 }
 
 
@@ -178,4 +257,6 @@ public static class Direction2D
     {
         return cardinalDirectionList[Random.Range(0, cardinalDirectionList.Count)];
     }
+
+    
 }

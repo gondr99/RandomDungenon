@@ -133,7 +133,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             BoundsInt bound = roomBoundingList[i];
 
             Vector2Int roomCenter = new Vector2Int(Mathf.RoundToInt(bound.center.x), Mathf.RoundToInt(bound.center.y));
-            HashSet<Vector2Int> roomFloor = RunRandomWalk(_dungeonData, roomCenter, _fillRandomWalk);
+            HashSet<Vector2Int> roomFloor = RunRandomWalk(_dungeonData, roomCenter);
 
             foreach (Vector2Int position in roomFloor)
             {
