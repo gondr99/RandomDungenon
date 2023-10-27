@@ -37,7 +37,7 @@ public class TilemapVisualizer : MonoBehaviour
 
 
     //십자방향 타일 채울때는 4비트를 사용한다.
-    public void PaintSingleBasicWall(Vector2Int position, byte tileFlag)
+    public void PaintSingleBasicWall(Vector2Int position, int tileFlag)
     {
         //Debug.Log($"{position}, type: { tileFlag.ToString()}");
         //벽하나 칠하기.
@@ -65,7 +65,7 @@ public class TilemapVisualizer : MonoBehaviour
     }
 
     //대각선 타일을 채울때는 8방향을 모두 써야 해
-    public void PaintSingleCornerWall(Vector2Int position, byte tileFlag)
+    public void PaintSingleCornerWall(Vector2Int position, int tileFlag)
     {
         //Debug.Log($"{position}, type: {tileFlag.ToString()}");
         TileBase tile = null;

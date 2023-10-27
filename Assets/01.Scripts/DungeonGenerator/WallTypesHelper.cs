@@ -72,7 +72,6 @@ public static class WallTypesHelper
         0b10000110,
         0b11000100,
         0b01000010
-
     };
 
     public static HashSet<int> wallDiagonalCornerDownLeft = new HashSet<int>
@@ -150,7 +149,17 @@ public static class WallTypesHelper
         0b01110110,
         0b00110110,
         0b00100010,
-        0b00110111
+        0b00110111,
+        0b00110010,
+        0b01100111,
+        0b11110110,
+        0b01110010,
+        0b01110011,
+        0b11010110,
+        0b01100110,
+        0b11100010,
+        0b01100010,
+        0b10110011
     };
 
     public static HashSet<int> wallBottmEightDirections = new HashSet<int>

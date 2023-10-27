@@ -17,6 +17,9 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     [SerializeField]
     private bool _randomWalkRooms = false;
 
+    [SerializeField] private bool _path3X3 = true;
+    
+
 
     protected override void RunProceduralGeneration()
     {
@@ -96,6 +99,11 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             int delta = destination.y - position.y > 0 ? 1: -1;
             position += new Vector2Int(0, delta);
             corridor.Add(position);
+            if (_path3X3)
+            {
+                corridor.Add(position + new Vector2Int(-1, 0));
+                corridor.Add(position + new Vector2Int(1, 0));
+            }
         }
 
         while (position.x != destination.x)
@@ -103,9 +111,18 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             int delta = destination.x - position.x > 0 ? 1: -1;
             position += new Vector2Int(delta, 0);
             corridor.Add(position);
+            
+            if (_path3X3)
+            {
+                corridor.Add(position + new Vector2Int(0, -1));
+                corridor.Add(position + new Vector2Int(0, 1));
+            }
         }
+
         return corridor;
     }
+    
+   
     
     private HashSet<Vector2Int> CreateRoomRandomly(List<BoundsInt> roomBoundingList)
     {
@@ -116,7 +133,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             BoundsInt bound = roomBoundingList[i];
 
             Vector2Int roomCenter = new Vector2Int(Mathf.RoundToInt(bound.center.x), Mathf.RoundToInt(bound.center.y));
-            HashSet<Vector2Int> roomFloor = RunRandomWalk(_dungeonData, roomCenter);
+            HashSet<Vector2Int> roomFloor = RunRandomWalk(_dungeonData, roomCenter, _fillRandomWalk);
 
             foreach (Vector2Int position in roomFloor)
             {

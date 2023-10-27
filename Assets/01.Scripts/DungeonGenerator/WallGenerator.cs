@@ -18,17 +18,17 @@ public static class WallGenerator
     {
         foreach (Vector2Int position in cornerWallPosition)
         {
-            byte binaryType = 0;
+            int binaryType = 0;
             foreach (Vector2Int direction in Direction2D.eightDirectionList)
             {
                 Vector2Int neighborPosition = position + direction;
                 if (floorPosition.Contains(neighborPosition))
                 {
-                    binaryType = (byte)((binaryType << 1) + 1);
+                    binaryType = (binaryType << 1) + 1;
                 }
                 else
                 {
-                    binaryType = (byte)(binaryType << 1);
+                    binaryType = (binaryType << 1);
                 }
             }
             tilemapVisualizer.PaintSingleCornerWall(position, binaryType);
@@ -39,18 +39,18 @@ public static class WallGenerator
     {
         foreach (var position in basicWallPosition)
         {
-            byte binaryType = 0;
+            int binaryType = 0;
             //string debugStr = "";
             foreach (Vector2Int direction in Direction2D.cardinalDirectionList)
             {
                 Vector2Int neighborPosition = position + direction;
                 if (floorPosition.Contains(neighborPosition))
                 {
-                    binaryType = (byte)((binaryType << 1) + 1);
+                    binaryType = (binaryType << 1) + 1;
                 }
                 else
                 {
-                    binaryType = (byte)(binaryType << 1);
+                    binaryType <<= 1;
                 }
             }
             tilemapVisualizer.PaintSingleBasicWall(position, binaryType);

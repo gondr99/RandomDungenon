@@ -40,7 +40,8 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
         for (int i = 0; i < corridors.Count; ++i)
         {
-            corridors[i] = IncreaseCorridorSizeByOne(corridors[i]);
+            //corridors[i] = IncreaseCorridorSizeByOne(corridors[i]);
+            corridors[i] = IncreaseCorridorBrush3by3(corridors[i]);
             floorPosition.UnionWith(corridors[i]);
         }
 
