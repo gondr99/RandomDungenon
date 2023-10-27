@@ -140,7 +140,17 @@ public static class WallTypesHelper
         0b01010110,
         0b11010101,
         0b11010100,
-        0b10010101
+        0b10010101,
+        0b01110111,
+        0b11100011,
+        0b11110111,
+        0b01100011,
+        0b11110011,
+        0b11100111,
+        0b01110110,
+        0b00110110,
+        0b00100010,
+        0b00110111
     };
 
     public static HashSet<int> wallBottmEightDirections = new HashSet<int>
