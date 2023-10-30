@@ -47,6 +47,9 @@ TagManager:
   - name: Wall
     uniqueID: 3617673199
     locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 3560128879
+    locked: 0
   - name: Agent
     uniqueID: 1795883851
     locked: 0

@@ -38,7 +38,7 @@ public class SimpleRandomWalkMapGenerator : AbstractDungeonGenerator
         //룸의 내용물을 꽉 채우도록 설계되었다면.
         if (fillRoom && floorPositions.Count > 0)
         {
-            Debug.Log("fill");
+            //Debug.Log("fill");
             List<Vector2Int> list = floorPositions.OrderBy(x => x.y).ToList();
 
             HashSet<Vector2Int> filledPosition = new HashSet<Vector2Int>(); //추가할 포지션
@@ -67,7 +67,7 @@ public class SimpleRandomWalkMapGenerator : AbstractDungeonGenerator
                     if (minX > position.x)
                     {
                         minX = position.x;
-                        Debug.Log("min 교체");
+                        //Debug.Log("min 교체");
                     }
 
                     if (maxX < position.x)
@@ -87,7 +87,7 @@ public class SimpleRandomWalkMapGenerator : AbstractDungeonGenerator
 
     private void FillLine(HashSet<Vector2Int> positions, int start, int end, int lineY)
     {
-        Debug.Log($"{start}, {end}, {lineY}");
+        //Debug.Log($"{start}, {end}, {lineY}");
         for (int i = start; i <= end; ++i)
         {
             positions.Add(new Vector2Int(i, lineY));

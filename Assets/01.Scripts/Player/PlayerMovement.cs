@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
@@ -10,10 +11,12 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody2D _rigidbody2D;
     private Vector2 _movementInput;
+    private PlayerAnimator _playerAnimator;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _playerAnimator = transform.Find("Visual").GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -30,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         _rigidbody2D.velocity = _movementInput * _speed;
+        _playerAnimator.SetMovement(_movementInput.sqrMagnitude > 0.01f);
     }
 
     private void CheckFlip()
